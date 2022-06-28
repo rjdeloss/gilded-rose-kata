@@ -55,6 +55,16 @@ describe GildedRose do
 
         expect(backstage_pass).to have_attributes(:name => "Backstage passes to a TAFKAL80ETC concert", :sell_in => 9, :quality => 7)
       end
+
+      it "should increase in quality by 3 when @sell_in is less than 5" do 
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 10)]
+        market = GildedRose.new(items)
+
+        market.update_quality
+        backstage_pass = market.items[0]
+
+        expect(backstage_pass).to have_attributes(:name => "Backstage passes to a TAFKAL80ETC concert", :sell_in => 4, :quality => 13)
+      end
     end
 
   end

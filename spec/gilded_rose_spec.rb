@@ -23,6 +23,16 @@ describe GildedRose do
 
         expect(aged_brie).to have_attributes(:name => "Aged Brie", :sell_in => -1, :quality => 6)
       end
+      
+      it "should not go over 50 in quantity" do 
+        items = [Item.new("Aged Brie", 2, 50)]
+        market = GildedRose.new(items)
+
+        market.update_quality
+        aged_brie = market.items[0]
+
+        expect(aged_brie).to have_attributes(:name => "Aged Brie", :sell_in => 1, :quality => 50)
+      end
     end
 
   end

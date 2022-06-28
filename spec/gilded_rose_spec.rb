@@ -2,100 +2,112 @@ require 'gilded_rose'
 
 describe GildedRose do
 
-  describe "#update_quality" do
-    describe "Item: Aged Brie" do 
-      it "should increase in quality as @sell_in decreases" do 
-        items = [Item.new("Aged Brie", 3, 3)]
+  describe '#update_quality' do
+    describe 'Item: Regular Item' do 
+      it 'should decrease in quality as @sell_in decreases' do 
+        items = [Item.new('Bacon', 3, 3)]
         market = GildedRose.new(items)
 
         market.update_quality
         aged_brie = market.items[0]
 
-        expect(aged_brie).to have_attributes(:name => "Aged Brie", :sell_in => 2, :quality => 4)
-      end
-      
-      it "should double in quality as @sell_in is updated after the expiration" do 
-        items = [Item.new("Aged Brie", 0, 4)]
-        market = GildedRose.new(items)
-
-        market.update_quality
-        aged_brie = market.items[0]
-
-        expect(aged_brie).to have_attributes(:name => "Aged Brie", :sell_in => -1, :quality => 6)
-      end
-      
-      it "should not go over 50 in quantity" do 
-        items = [Item.new("Aged Brie", 2, 50)]
-        market = GildedRose.new(items)
-
-        market.update_quality
-        aged_brie = market.items[0]
-
-        expect(aged_brie).to have_attributes(:name => "Aged Brie", :sell_in => 1, :quality => 50)
+        expect(aged_brie).to have_attributes(:name => 'Bacon', :sell_in => 2, :quality => 2)
       end
     end
 
-    describe "Item: Backstage passes to a TAFKAL80ETC concert" do
-      it "should increase in quality as @sell_in decreases" do 
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 3)]
+    describe 'Item: Aged Brie' do 
+      it 'should increase in quality as @sell_in decreases' do 
+        items = [Item.new('Aged Brie', 3, 3)]
         market = GildedRose.new(items)
 
         market.update_quality
-        backstage_pass = market.items[0]
+        aged_brie = market.items[0]
 
-        expect(backstage_pass).to have_attributes(:name => "Backstage passes to a TAFKAL80ETC concert", :sell_in => 10, :quality => 4)
+        expect(aged_brie).to have_attributes(:name => 'Aged Brie', :sell_in => 2, :quality => 4)
       end
-
-      it "should increase in quality by 2 when @sell_in is less than 10" do 
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 5)]
+      
+      it 'should double in quality as @sell_in is updated after the expiration' do 
+        items = [Item.new('Aged Brie', 0, 4)]
         market = GildedRose.new(items)
 
         market.update_quality
-        backstage_pass = market.items[0]
+        aged_brie = market.items[0]
 
-        expect(backstage_pass).to have_attributes(:name => "Backstage passes to a TAFKAL80ETC concert", :sell_in => 9, :quality => 7)
+        expect(aged_brie).to have_attributes(:name => 'Aged Brie', :sell_in => -1, :quality => 6)
       end
-
-      it "should increase in quality by 3 when @sell_in is less than 5" do 
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 10)]
+      
+      it 'should not go over 50 in quantity' do 
+        items = [Item.new('Aged Brie', 2, 50)]
         market = GildedRose.new(items)
 
         market.update_quality
-        backstage_pass = market.items[0]
+        aged_brie = market.items[0]
 
-        expect(backstage_pass).to have_attributes(:name => "Backstage passes to a TAFKAL80ETC concert", :sell_in => 4, :quality => 13)
-      end
-
-      it "should drop quality to 0 after the concert" do 
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 13)]
-        market = GildedRose.new(items)
-
-        market.update_quality
-        backstage_pass = market.items[0]
-
-        expect(backstage_pass).to have_attributes(:name => "Backstage passes to a TAFKAL80ETC concert", :sell_in => -1, :quality => 0)
+        expect(aged_brie).to have_attributes(:name => 'Aged Brie', :sell_in => 1, :quality => 50)
       end
     end
 
-    describe "Item: Sulfuras, Hand of Ragnaros" do 
-      it "should not decrease in quality" do 
-        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 13)]
+    describe 'Item: Backstage passes to a TAFKAL80ETC concert' do
+      it 'should increase in quality as @sell_in decreases' do 
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 3)]
         market = GildedRose.new(items)
 
         market.update_quality
         backstage_pass = market.items[0]
 
-        expect(backstage_pass).to have_attributes(:name => "Sulfuras, Hand of Ragnaros", :sell_in => 0, :quality => 13)
+        expect(backstage_pass).to have_attributes(:name => 'Backstage passes to a TAFKAL80ETC concert', :sell_in => 10, :quality => 4)
       end
 
-      it "does not have to be sold" do 
-        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 25)]
+      it 'should increase in quality by 2 when @sell_in is less than 10' do 
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 10, 5)]
         market = GildedRose.new(items)
 
         market.update_quality
         backstage_pass = market.items[0]
 
-        expect(backstage_pass).to have_attributes(:name => "Sulfuras, Hand of Ragnaros", :sell_in => 0, :quality => 25)
+        expect(backstage_pass).to have_attributes(:name => 'Backstage passes to a TAFKAL80ETC concert', :sell_in => 9, :quality => 7)
+      end
+
+      it 'should increase in quality by 3 when @sell_in is less than 5' do 
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 5, 10)]
+        market = GildedRose.new(items)
+
+        market.update_quality
+        backstage_pass = market.items[0]
+
+        expect(backstage_pass).to have_attributes(:name => 'Backstage passes to a TAFKAL80ETC concert', :sell_in => 4, :quality => 13)
+      end
+
+      it 'should drop quality to 0 after the concert' do 
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 0, 13)]
+        market = GildedRose.new(items)
+
+        market.update_quality
+        backstage_pass = market.items[0]
+
+        expect(backstage_pass).to have_attributes(:name => 'Backstage passes to a TAFKAL80ETC concert', :sell_in => -1, :quality => 0)
+      end
+    end
+
+    describe 'Item: Sulfuras, Hand of Ragnaros' do 
+      it 'should not decrease in quality' do 
+        items = [Item.new('Sulfuras, Hand of Ragnaros', 0, 13)]
+        market = GildedRose.new(items)
+
+        market.update_quality
+        backstage_pass = market.items[0]
+
+        expect(backstage_pass).to have_attributes(:name => 'Sulfuras, Hand of Ragnaros', :sell_in => 0, :quality => 13)
+      end
+
+      it 'does not have to be sold' do 
+        items = [Item.new('Sulfuras, Hand of Ragnaros', 0, 25)]
+        market = GildedRose.new(items)
+
+        market.update_quality
+        backstage_pass = market.items[0]
+
+        expect(backstage_pass).to have_attributes(:name => 'Sulfuras, Hand of Ragnaros', :sell_in => 0, :quality => 25)
       end
     end
 

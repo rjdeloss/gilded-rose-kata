@@ -77,6 +77,18 @@ describe GildedRose do
       end
     end
 
+    describe "Item: Sulfuras, Hand of Ragnaros" do 
+      it "should not decrease in quality" do 
+        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 13)]
+        market = GildedRose.new(items)
+
+        market.update_quality
+        backstage_pass = market.items[0]
+
+        expect(backstage_pass).to have_attributes(:name => "Sulfuras, Hand of Ragnaros", :sell_in => 0, :quality => 13)
+      end
+    end
+
   end
 
 end

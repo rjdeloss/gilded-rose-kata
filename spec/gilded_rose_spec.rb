@@ -87,6 +87,16 @@ describe GildedRose do
 
         expect(backstage_pass).to have_attributes(:name => "Sulfuras, Hand of Ragnaros", :sell_in => 0, :quality => 13)
       end
+
+      it "does not have to be sold" do 
+        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 25)]
+        market = GildedRose.new(items)
+
+        market.update_quality
+        backstage_pass = market.items[0]
+
+        expect(backstage_pass).to have_attributes(:name => "Sulfuras, Hand of Ragnaros", :sell_in => 0, :quality => 25)
+      end
     end
 
   end

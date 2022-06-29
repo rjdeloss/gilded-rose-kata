@@ -34,16 +34,16 @@ class Item
       end
     else
       if @quality < 50
-        @quality = @quality + 1
+        adjust_quantity(1)
         if @name == "Backstage passes to a TAFKAL80ETC concert"
           if @sell_in < 11
             if @quality < 50
-              @quality = @quality + 1
+              adjust_quantity(1)
             end
           end
           if @sell_in < 6
             if @quality < 50
-              @quality = @quality + 1
+              adjust_quantity(1)
             end
           end
         end
@@ -57,17 +57,21 @@ class Item
         if @name != "Backstage passes to a TAFKAL80ETC concert"
           if @quality > 0
             if @name != "Sulfuras, Hand of Ragnaros"
-              @quality = @quality - 1
+              adjust_quantity(-1)
             end
           end
         else
-          @quality = @quality - @quality
+          adjust_quantity(-(@quality))
         end
       else
         if @quality < 50
-          @quality = @quality + 1
+          adjust_quantity(1)
         end
       end
     end
+  end
+
+  def adjust_quantity(adjustment)
+    @quality += adjustment
   end
 end

@@ -30,27 +30,19 @@ class Item
   
   def update_quality
     if @name != AGED_BRIE and @name != BACKSTAGE_PASS
-      if @quality > 0
         if @name != SULFURAS
-          @quality = @quality - 1
+          adjust_quality(-1)
         end
-      end
     else
-      if @quality < 50
-        adjust_quantity(1)
+        adjust_quality(1)
         if @name == BACKSTAGE_PASS
           if @sell_in < 11
-            if @quality < 50
-              adjust_quantity(1)
-            end
+              adjust_quality(1)
           end
           if @sell_in < 6
-            if @quality < 50
-              adjust_quantity(1)
-            end
+              adjust_quality(1)
           end
         end
-      end
     end
     if @name != SULFURAS
       @sell_in = @sell_in - 1
@@ -58,23 +50,20 @@ class Item
     if @sell_in < 0
       if @name != AGED_BRIE
         if @name != BACKSTAGE_PASS
-          if @quality > 0
             if @name != SULFURAS
-              adjust_quantity(-1)
+              adjust_quality(-1)
             end
-          end
         else
-          adjust_quantity(-(@quality))
+          @quality = @quality - @quality
         end
       else
-        if @quality < 50
-          adjust_quantity(1)
-        end
+        adjust_quality(1)
       end
     end
   end
 
-  def adjust_quantity(adjustment)
-    @quality += adjustment
+  def adjust_quality(adjustment)
+    new_quality = @quality + adjustment
+    @quality = new_quality if (new_quality <= 50 && new_quality >= 0)
   end
 end

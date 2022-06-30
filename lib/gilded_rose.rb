@@ -14,6 +14,9 @@ end
 
 class Item
   attr_accessor :name, :sell_in, :quality
+  AGED_BRIE = 'Aged Brie'
+  BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
+  SULFURAS = "Sulfuras, Hand of Ragnaros"
 
   def initialize(name, sell_in, quality)
     @name = name
@@ -26,48 +29,41 @@ class Item
   end
   
   def update_quality
-    if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
-      if @quality > 0
-        if @name != "Sulfuras, Hand of Ragnaros"
-          @quality = @quality - 1
+    if @name != AGED_BRIE and @name != BACKSTAGE_PASS
+        if @name != SULFURAS
+          adjust_quality(-1)
         end
-      end
     else
-      if @quality < 50
-        @quality = @quality + 1
-        if @name == "Backstage passes to a TAFKAL80ETC concert"
+        adjust_quality(1)
+        if @name == BACKSTAGE_PASS
           if @sell_in < 11
-            if @quality < 50
-              @quality = @quality + 1
-            end
+              adjust_quality(1)
           end
           if @sell_in < 6
-            if @quality < 50
-              @quality = @quality + 1
-            end
+              adjust_quality(1)
           end
         end
-      end
     end
-    if @name != "Sulfuras, Hand of Ragnaros"
+    if @name != SULFURAS
       @sell_in = @sell_in - 1
     end
     if @sell_in < 0
-      if @name != "Aged Brie"
-        if @name != "Backstage passes to a TAFKAL80ETC concert"
-          if @quality > 0
-            if @name != "Sulfuras, Hand of Ragnaros"
-              @quality = @quality - 1
+      if @name != AGED_BRIE
+        if @name != BACKSTAGE_PASS
+            if @name != SULFURAS
+              adjust_quality(-1)
             end
-          end
         else
           @quality = @quality - @quality
         end
       else
-        if @quality < 50
-          @quality = @quality + 1
-        end
+        adjust_quality(1)
       end
     end
+  end
+
+  def adjust_quality(adjustment)
+    new_quality = @quality + adjustment
+    @quality = new_quality if (new_quality <= 50 && new_quality >= 0)
   end
 end
